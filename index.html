@@ -372,20 +372,8 @@
 <audio id="audioEl" preload="none"></audio>
 
 <script>
-// ════════════════════════════════════════
-// STATIONS — редактируй здесь
-// ════════════════════════════════════════
-const STATIONS = [
-  { id:0, name:'Европа Плюс', short:'Europa\nPlus', streamUrl:'https://ep256.hostingradio.ru:8052/ep256.mp3', color:['#1a1060','#3b1fa3'], flag:'🇷🇺' },
-  { id:1, name:'Дорожное',    short:'Дорожное\nРадио', streamUrl:'https://dorognoe.hostingradio.ru:8052/dorognoe128.mp3', color:['#0a2a0a','#1a6b1a'], flag:'🇷🇺' },
-  { id:2, name:'Ретро FM',    short:'RETRO\nFM', streamUrl:'https://retro256.hostingradio.ru:8052/retro256.mp3', color:['#2a0a10','#8b1a2a'], flag:'🇷🇺' },
-  { id:3, name:'Авторадио',   short:'АВТО\nРАДИО', streamUrl:'https://autoradio.hostingradio.ru:8052/autoradio128.mp3', color:['#0a1a30','#1a4a8b'], flag:'🇷🇺' },
-  { id:4, name:'Радио Маяк',  short:'МАЯК', streamUrl:'https://icecast.vgtrk.cdnvideo.ru/mayak_live', color:['#1a0a30','#5b1a8b'], flag:'🇷🇺' },
-  { id:5, name:'BBC Radio 1', short:'BBC\nR1', streamUrl:'https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one', color:['#1a0a0a','#cc1111'], flag:'🇬🇧' },
-  { id:6, name:'NRJ',         short:'NRJ', streamUrl:'https://scdn.nrjaudio.fm/audio1/fr/40081/mp3_128.mp3', color:['#1a1000','#cc8800'], flag:'🇫🇷' },
-];
-
 // ── State ──
+let STATIONS = [];
 let currentIdx = 0;
 let isPlaying = false;
 let hlsInstance = null;
@@ -539,8 +527,24 @@ playBtn.addEventListener('click', togglePlay);
 document.getElementById('prevBtn').addEventListener('click', () => navigate(-1));
 document.getElementById('nextBtn').addEventListener('click', () => navigate(1));
 
-buildCarousel();
-selectStation(0);
+// ── Загрузка станций из stations.json ──
+async function loadStations() {
+  try {
+    const res = await fetch('/stations.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    STATIONS = await res.json();
+    if (!Array.isArray(STATIONS) || STATIONS.length === 0) throw new Error('Пустой список станций');
+    buildCarousel();
+    selectStation(0);
+  } catch (err) {
+    console.error('[DesireFM] Не удалось загрузить stations.json:', err);
+    songTitle.textContent = 'Ошибка загрузки';
+    songArtist.textContent = 'stations.json не найден или повреждён';
+    showToast('Не удалось загрузить список станций');
+  }
+}
+
+loadStations();
 
 // ── Service Worker registration ──
 if ('serviceWorker' in navigator) {

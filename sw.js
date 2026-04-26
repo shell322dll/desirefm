@@ -7,6 +7,7 @@ const SHELL_FILES = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/stations.json',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
 ];
@@ -46,10 +47,10 @@ self.addEventListener('fetch', event => {
   if (
     event.request.destination === 'audio' ||
     url.pathname.includes('stream') ||
-    url.pathname.includes('.mp3') ||
-    url.pathname.includes('.aac') ||
-    url.pathname.includes('.m3u8') ||
-    url.hostname !== self.location.hostname
+    url.pathname.endsWith('.mp3') ||
+    url.pathname.endsWith('.aac') ||
+    url.pathname.endsWith('.m3u8') ||
+    (url.hostname !== self.location.hostname && !url.pathname.endsWith('.json'))
   ) {
     return; // браузер обработает сам
   }
