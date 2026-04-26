@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#060b18"/>
+      <stop offset="100%" stop-color="#0f1e3d"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f8ef7"/>
+      <stop offset="100%" stop-color="#7b5cf0"/>
+    </linearGradient>
+    <linearGradient id="dot" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60c8ff"/>
+      <stop offset="100%" stop-color="#4f8ef7"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background rounded rect -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- Subtle ambient glow behind content -->
+  <ellipse cx="256" cy="270" rx="160" ry="130" fill="#2a4a9a" opacity="0.18" filter="url(#softglow)"/>
+
+  <!-- Radio wave arcs (left side, incomplete circles suggesting broadcast) -->
+  <!-- Outermost arc -->
+  <path d="M 148 148 A 152 152 0 0 1 364 364" fill="none" stroke="url(#wave)" stroke-width="10" stroke-linecap="round" opacity="0.25"/>
+  <!-- Middle arc -->
+  <path d="M 172 172 A 116 116 0 0 1 340 340" fill="none" stroke="url(#wave)" stroke-width="12" stroke-linecap="round" opacity="0.45"/>
+  <!-- Inner arc -->
+  <path d="M 196 196 A 80 80 0 0 1 316 316" fill="none" stroke="url(#wave)" stroke-width="14" stroke-linecap="round" opacity="0.75"/>
+
+  <!-- Center dot (broadcast origin) -->
+  <circle cx="256" cy="256" r="22" fill="url(#dot)" filter="url(#glow)"/>
+  <circle cx="256" cy="256" r="12" fill="#ffffff" opacity="0.95"/>
+
+  <!-- "D" letterform using arcs — stylized, bold -->
+  <!-- Vertical bar of D -->
+  <rect x="136" y="152" width="26" height="208" rx="8" fill="url(#wave)" opacity="0.92"/>
+  <!-- Curved part of D - large arc from top-right to bottom-right -->
+  <path d="M 162 162 Q 330 162 330 256 Q 330 350 162 350" fill="none" stroke="url(#wave)" stroke-width="26" stroke-linecap="round" opacity="0.92"/>
+
+  <!-- "FM" text - small, below center, clean -->
+  <text x="256" y="430" font-family="'Arial', sans-serif" font-weight="700" font-size="62" letter-spacing="8" text-anchor="middle" fill="url(#wave)" opacity="0.88">FM</text>
+
+  <!-- Top-right accent dot (live indicator style) -->
+  <circle cx="368" cy="144" r="16" fill="#4f8ef7" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="368" cy="144" r="8" fill="#a0d4ff"/>
+</svg>
