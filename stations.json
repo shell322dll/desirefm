@@ -13,15 +13,15 @@
     "short": "Sea FM",
     "streamUrl": "https://s3.myradiostream.com/4976/listen.mp3",
     "color": ["#0a2a0a", "#1a6b1a"],
-    "flag": "FI"
+    "flag": "🇫🇮"
   },
   {
     "id": 2,
-    "name": "Ретро FM",
-    "short": "RETRO\nFM",
-    "streamUrl": "https://retro256.hostingradio.ru:8052/retro256.mp3",
+    "name": "Antena1",
+    "short": "Antena1",
+    "streamUrl": "https://antenaone.crossradio.com.br/stream/1",
     "color": ["#2a0a10", "#8b1a2a"],
-    "flag": "🇷🇺"
+    "flag": "🇧🇷"
   },
   {
     "id": 3,
