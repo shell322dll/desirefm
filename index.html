@@ -397,15 +397,16 @@ function buildCarousel() {
     const card = document.createElement('div');
     card.className = 'station-card';
     card.id = `card-${i}`;
+    const logoInner = s.logo
+      ? `<img src="${s.logo}" alt="${s.name}" style="width:58px;height:58px;object-fit:cover;border-radius:13px;display:block;" onerror="this.outerHTML='<span style=\\'font-family:Syne,sans-serif;font-size:11px;font-weight:700;color:#fff;text-align:center;padding:4px;line-height:1.2;white-space:pre-line;\\'>${s.short}</span>'">`
+      : `<span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:#fff;text-align:center;padding:4px;line-height:1.2;white-space:pre-line;">${s.short}</span>`;
     card.innerHTML = `
       <div id="clogo-${i}" style="
-        width:64px;height:64px;border-radius:16px;
+        width:64px;height:64px;border-radius:16px;overflow:hidden;
         background:linear-gradient(135deg,${s.color[0]},${s.color[1]});
         display:flex;align-items:center;justify-content:center;
         border:2px solid transparent;transition:border-color .25s,box-shadow .25s;
-        font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
-        color:#fff;text-align:center;padding:4px;line-height:1.2;white-space:pre-line;
-      ">${s.short}</div>
+      ">${logoInner}</div>
       <div class="station-card-name">${s.name}</div>`;
     card.addEventListener('click', () => { selectStation(i); if (!isPlaying) togglePlay(); });
     carousel.appendChild(card);
@@ -427,7 +428,11 @@ function selectStation(idx, autoPlay = false) {
   logoWrap.classList.add('changing');
   setTimeout(() => {
     logoBg.style.background = `linear-gradient(135deg,${s.color[0]},${s.color[1]})`;
-    logoText.textContent = s.short;
+    if (s.logo) {
+      logoText.innerHTML = `<img src="${s.logo}" alt="${s.name}" style="width:80px;height:80px;object-fit:cover;border-radius:18px;display:block;" onerror="this.outerHTML='${s.short.replace(/\n/g,'<br>')}'" >`;
+    } else {
+      logoText.textContent = s.short;
+    }
     flagBadge.textContent = s.flag;
     songTitle.textContent = s.name;
     songArtist.textContent = 'нажмите ▶ для воспроизведения';

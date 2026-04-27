@@ -5,23 +5,26 @@
     "short": "Europa\nPlus",
     "streamUrl": "https://hls-01-regions.emgsound.ru/11_msk/112/playlist.m3u8",
     "color": ["#1a1060", "#3b1fa3"],
-    "flag": "🇷🇺"
+    "flag": "🇷🇺",
+    "logo": "/logos/europaplus.png"
   },
   {
     "id": 1,
     "name": "Sea FM",
     "short": "Sea FM",
     "streamUrl": "https://s3.myradiostream.com/4976/listen.mp3",
-    "color": ["#0a2a0a", "#1a6b1a"],
-    "flag": "🇫🇮"
+    "color": ["#0a2040", "#0d4a6b"],
+    "flag": "🇫🇮",
+    "logo": "/logos/seafm.png"
   },
   {
     "id": 2,
-    "name": "Antena1",
-    "short": "Antena1",
+    "name": "Antena 1",
+    "short": "Antena 1",
     "streamUrl": "https://antenaone.crossradio.com.br/stream/1",
-    "color": ["#2a0a10", "#8b1a2a"],
-    "flag": "🇧🇷"
+    "color": ["#0a1a40", "#1a3a8b"],
+    "flag": "🇧🇷",
+    "logo": "/logos/antena1.png"
   },
   {
     "id": 3,
@@ -29,30 +32,34 @@
     "short": "KRAL POP",
     "streamUrl": "https://dygedge.radyotvonline.net/kralpop/playlist.m3u8",
     "color": ["#0a1a30", "#1a4a8b"],
-    "flag": "🇹🇷"
+    "flag": "🇹🇷",
+    "logo": "/logos/kralpop.png"
   },
   {
     "id": 4,
     "name": "Metro FM",
     "short": "Metro FM",
     "streamUrl": "https://23543.live.streamtheworld.com/METRO_FM128AAC.aac",
-    "color": ["#1a0a30", "#5b1a8b"],
-    "flag": "🇹🇷"
+    "color": ["#2a0a50", "#6b1aab"],
+    "flag": "🇹🇷",
+    "logo": "/logos/metrofm.png"
   },
   {
     "id": 5,
-    "name": "Cherie FM",
-    "short": "Cherie FM",
+    "name": "Chérie FM",
+    "short": "Chérie FM",
     "streamUrl": "https://streaming.nrjaudio.fm/ou2n2epw5hs7",
-    "color": ["#1a0a0a", "#cc1111"],
-    "flag": "🇫🇷"
+    "color": ["#2a0a10", "#8b1a2a"],
+    "flag": "🇫🇷",
+    "logo": "/logos/cheriefm.png"
   },
   {
-    "id": 7,
-    "name": "Skyrock FM",
-    "short": "Skyrock FM",
+    "id": 6,
+    "name": "Skyrock",
+    "short": "Skyrock",
     "streamUrl": "https://icecast.skyrock.net/s/natio_aac_128k",
-    "color": ["#1a1000", "#cc8800"],
-    "flag": "🇫🇷"
+    "color": ["#1a0800", "#8b3000"],
+    "flag": "🇫🇷",
+    "logo": "/logos/skyrock.png"
   }
 ]
