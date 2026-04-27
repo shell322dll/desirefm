@@ -35,7 +35,7 @@
     --radius: 20px;
   }
 
-  html, body { height: 100%; overflow: hidden; }
+  html, body { height: 100%; overflow: hidden; touch-action: none; overscroll-behavior: none; }
 
   body {
     font-family: 'Inter', sans-serif;
@@ -56,6 +56,8 @@
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    touch-action: pan-y;
+    overscroll-behavior: none;
   }
 
   .bg-blob {
@@ -229,11 +231,13 @@
     color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase;
     padding: 0 20px 10px; position: relative; z-index: 10;
   }
-  .carousel-wrap { position: relative; z-index: 10; padding-bottom: 4px; }
+  .carousel-wrap { position: relative; z-index: 10; padding-bottom: 4px; overflow: hidden; touch-action: pan-x; }
   .carousel {
     display: flex; gap: 10px; padding: 4px 20px 4px;
     overflow-x: auto; scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
   }
   .carousel::-webkit-scrollbar { display: none; }
 
@@ -579,6 +583,24 @@ async function loadStations() {
 }
 
 loadStations();
+
+// ── Карусель: блокируем вертикальный свайп, чтобы не двигать страницу ──
+(function() {
+  let startX = 0, startY = 0;
+  const el = document.getElementById('carousel');
+  el.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  el.addEventListener('touchmove', e => {
+    const dx = Math.abs(e.touches[0].clientX - startX);
+    const dy = Math.abs(e.touches[0].clientY - startY);
+    // Если движение горизонтальное — отдаём карусели, блокируем страницу
+    if (dx > dy) {
+      e.stopPropagation();
+    }
+  }, { passive: false });
+})();
 
 // ── Service Worker registration ──
 if ('serviceWorker' in navigator) {
