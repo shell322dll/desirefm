@@ -518,8 +518,18 @@ function navigate(dir) {
 
 function updateMediaSession(station) {
   if (!('mediaSession' in navigator)) return;
+  // Строим абсолютный URL логотипа для экрана блокировки
+  const artworkUrl = station.logo
+    ? (station.logo.startsWith('http') ? station.logo : window.location.origin + station.logo)
+    : null;
   navigator.mediaSession.metadata = new MediaMetadata({
-    title: station.name, artist: 'Live Radio', album: 'DesireFM'
+    title: station.name,
+    artist: 'Live Radio',
+    album: 'DesireFM',
+    artwork: artworkUrl ? [
+      { src: artworkUrl, sizes: '512x512', type: 'image/png' },
+      { src: artworkUrl, sizes: '192x192', type: 'image/png' }
+    ] : []
   });
   navigator.mediaSession.setActionHandler('previoustrack', () => navigate(-1));
   navigator.mediaSession.setActionHandler('nexttrack',     () => navigate(1));
