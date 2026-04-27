@@ -475,11 +475,22 @@ function stopAudio() {
 }
 
 function onPlayError(err) {
-  console.error(err);
-  setPlayState(false);
-  logoWrap.classList.remove('loading');
-  songArtist.textContent = 'ошибка соединения';
-  showToast('Не удалось подключиться к станции');
+  // AbortError — нормальное прерывание при переключении станции, не ошибка
+  if (err && (err.name === 'AbortError' || err.type === 'abort')) {
+    console.log('[Audio] Stream switched, abort is expected');
+    return;
+  }
+  console.error('[Audio] Error:', err);
+  // Задержка 1.5с: даём CDN время ответить перед показом ошибки
+  clearTimeout(window._errorTimer);
+  window._errorTimer = setTimeout(() => {
+    if (!isPlaying) {
+      setPlayState(false);
+      logoWrap.classList.remove('loading');
+      songArtist.textContent = 'ошибка соединения';
+      showToast('Не удалось подключиться к станции');
+    }
+  }, 1500);
 }
 
 function setPlayState(playing) {
@@ -493,8 +504,12 @@ function setPlayState(playing) {
 }
 
 function togglePlay() {
-  if (isPlaying) stopAudio();
-  else { startAudio(STATIONS[currentIdx]); setPlayState(true); }
+  if (isPlaying) {
+    stopAudio();
+  } else {
+    // setPlayState(true) вызывается из события 'playing', не сразу
+    startAudio(STATIONS[currentIdx]);
+  }
 }
 
 function navigate(dir) {
@@ -520,7 +535,11 @@ function showToast(msg) {
 
 audio.addEventListener('playing', () => { setPlayState(true); logoWrap.classList.remove('loading'); songArtist.textContent = 'в эфире'; });
 audio.addEventListener('waiting', () => { logoWrap.classList.add('loading'); songArtist.textContent = 'буферизация...'; });
-audio.addEventListener('error',   (e) => { if (isPlaying) onPlayError(e); });
+audio.addEventListener('error', (e) => {
+  // Игнорируем ошибку при пустом src (это stopAudio в действии)
+  if (!audio.src || audio.src === window.location.href) return;
+  onPlayError(e);
+});
 
 volSlider.addEventListener('input', () => {
   audio.volume = volSlider.value / 100;
