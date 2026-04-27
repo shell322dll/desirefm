@@ -35,7 +35,14 @@
     --radius: 20px;
   }
 
-  html, body { height: 100%; overflow: hidden; touch-action: none; overscroll-behavior: none; }
+  html, body {
+    height: 100%; width: 100%;
+    overflow: hidden;
+    position: fixed;
+    touch-action: none;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
+  }
 
   body {
     font-family: 'Inter', sans-serif;
@@ -48,15 +55,16 @@
   }
 
   .app {
+    position: fixed;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
     width: 100%;
     max-width: 420px;
-    height: 100dvh;
-    max-height: 820px;
+    height: 100%; height: 100dvh;
     display: flex;
     flex-direction: column;
-    position: relative;
     overflow: hidden;
-    touch-action: pan-y;
+    touch-action: none;
     overscroll-behavior: none;
   }
 
@@ -584,22 +592,36 @@ async function loadStations() {
 
 loadStations();
 
-// ── Карусель: блокируем вертикальный свайп, чтобы не двигать страницу ──
+// ── Глобальная блокировка горизонтального свайпа по всей странице ──
 (function() {
-  let startX = 0, startY = 0;
-  const el = document.getElementById('carousel');
-  el.addEventListener('touchstart', e => {
+  // Блокируем горизонтальный свайп везде кроме карусели
+  document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+  }, { passive: false });
+
+  // Карусель: разрешаем горизонтальный свайп только внутри неё
+  let startX = 0, startY = 0, isHoriz = false;
+  const carousel = document.getElementById('carousel');
+
+  carousel.addEventListener('touchstart', e => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
+    isHoriz = false;
   }, { passive: true });
-  el.addEventListener('touchmove', e => {
-    const dx = Math.abs(e.touches[0].clientX - startX);
-    const dy = Math.abs(e.touches[0].clientY - startY);
-    // Если движение горизонтальное — отдаём карусели, блокируем страницу
-    if (dx > dy) {
-      e.stopPropagation();
+
+  carousel.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    if (!isHoriz && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 5) {
+      isHoriz = true;
     }
-  }, { passive: false });
+    if (isHoriz) {
+      // Двигаем карусель вручную — preventDefault уже стоит на document
+      carousel.scrollLeft -= dx;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }
+  }, { passive: true });
 })();
 
 // ── Service Worker registration ──
