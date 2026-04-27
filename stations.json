@@ -25,33 +25,33 @@
   },
   {
     "id": 3,
-    "name": "Авторадио",
-    "short": "АВТО\nРАДИО",
-    "streamUrl": "https://autoradio.hostingradio.ru:8052/autoradio128.mp3",
+    "name": "KRAL POP",
+    "short": "KRAL POP",
+    "streamUrl": "https://dygedge.radyotvonline.net/kralpop/playlist.m3u8",
     "color": ["#0a1a30", "#1a4a8b"],
-    "flag": "🇷🇺"
+    "flag": "🇹🇷"
   },
   {
     "id": 4,
-    "name": "Радио Маяк",
-    "short": "МАЯК",
-    "streamUrl": "https://icecast.vgtrk.cdnvideo.ru/mayak_live",
+    "name": "Metro FM",
+    "short": "Metro FM",
+    "streamUrl": "https://23543.live.streamtheworld.com/METRO_FM128AAC.aac",
     "color": ["#1a0a30", "#5b1a8b"],
-    "flag": "🇷🇺"
+    "flag": "🇹🇷"
   },
   {
     "id": 5,
-    "name": "BBC Radio 1",
-    "short": "BBC\nR1",
-    "streamUrl": "https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one",
+    "name": "Cherie FM",
+    "short": "Cherie FM",
+    "streamUrl": "https://streaming.nrjaudio.fm/ou2n2epw5hs7",
     "color": ["#1a0a0a", "#cc1111"],
-    "flag": "🇬🇧"
+    "flag": "🇫🇷"
   },
   {
     "id": 7,
-    "name": "NRJ",
-    "short": "NRJ",
-    "streamUrl": "https://scdn.nrjaudio.fm/audio1/fr/40081/mp3_128.mp3",
+    "name": "Skyrock FM",
+    "short": "Skyrock FM",
+    "streamUrl": "https://icecast.skyrock.net/s/natio_aac_128k",
     "color": ["#1a1000", "#cc8800"],
     "flag": "🇫🇷"
   }
